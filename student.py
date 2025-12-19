@@ -7,22 +7,12 @@ from plotly.subplots import make_subplots
 import numpy as np
 from datetime import datetime
 
-# ---------------------- 全局配置：仅添加背景色 CSS + 基础页面设置 ----------------------
+# ---------------------- 全局配置：仅保留基础页面设置（移除CSS） ----------------------
 st.set_page_config(
     page_title="学生成绩分析与预测系统",
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# 仅注入背景色 CSS（保留 Streamlit 所有默认样式，仅修改背景）
-st.markdown("""
-    <style>
-    /* 仅设置页面主背景色（马卡龙淡蓝），其余均为 Streamlit 默认样式 */
-    .stApp {
-        background-color: #E6F4FF;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 # ---------------------- 全局变量：统一列名定义 ----------------------
 COLUMNS = {
