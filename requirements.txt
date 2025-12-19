@@ -17,6 +17,7 @@ narwhals==2.13.0
 numpy==2.3.5
 packaging==25.0
 pandas==2.3.3
+plotly>=5.0.0
 pillow==12.0.0
 protobuf==6.33.2
 pyarrow==22.0.0
