@@ -26,22 +26,13 @@ COLUMNS = {
     "student_id": "学号"
 }
 
-# 🔥 核心修改：匹配截图中的photo文件夹路径（本地+云端相对路径）
-# 要求：需将photo文件夹上传到GitHub仓库根目录
+# 匹配截图中的photo文件夹路径（需将photo文件夹上传到GitHub仓库根目录）
 LOCAL_IMAGES = {
     "preview": "photo/功能预览图.png",
-    "excellent": "photo/很棒哦.jpg",  # 截图中对应的文件名
+    "excellent": "photo/很棒哦.jpg",
     "good": "photo/继续努力.jpg",
     "poor": "photo/要加强学习.jpg"
 }
-
-# 侧边栏调试：检查云端photo文件夹是否存在
-st.sidebar.markdown("### 📝 路径调试（云端）")
-st.sidebar.write("仓库根目录内容：", os.listdir("."))
-if os.path.exists("photo"):
-    st.sidebar.write("photo文件夹内容：", os.listdir("photo"))
-else:
-    st.sidebar.warning("❌ 未找到photo文件夹！")
 
 # ---------------------- 1. 数据加载函数 ----------------------
 @st.cache_data
@@ -95,12 +86,10 @@ if page == "项目概述":
     
     with col_right:
         st.subheader("📸 功能预览")
-        # 容错处理：图片不存在时显示提示
         if os.path.exists(LOCAL_IMAGES["preview"]):
             st.image(LOCAL_IMAGES["preview"], use_container_width=True)
         else:
             st.warning(f"⚠️ 功能预览图缺失：{LOCAL_IMAGES['preview']}")
-            st.info("请检查GitHub仓库的photo文件夹是否上传该图片")
 
     st.markdown("---")
 
