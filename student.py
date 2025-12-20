@@ -25,12 +25,12 @@ COLUMNS = {
     "student_id": "学号"
 }
 
-# 本地图片路径配置
+# 🔥 修正：图片实际路径为 streamlit_env 下的 images 文件夹（对应截图位置）
 LOCAL_IMAGES = {
-    "preview": r"D:/streamlit_env/photo/功能预览图.png",
-    "excellent": r"D:/streamlit_env/photo/很棒哦.jpg",
-    "good": r"D:/streamlit_env/photo/继续努力.jpg",
-    "poor": r"D:/streamlit_env/photo/要加强学习.jpg"
+    "preview": r"D:/streamlit_env/images/功能预览图.png",
+    "excellent": r"D:/streamlit_env/images/很棒哦.jpg",
+    "good": r"D:/streamlit_env/images/继续努力.jpg",
+    "poor": r"D:/streamlit_env/images/要加强学习.jpg"
 }
 
 # ---------------------- 1. 数据加载函数 ----------------------
