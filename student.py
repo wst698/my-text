@@ -6,8 +6,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 from datetime import datetime
+import os  # 用于路径校验和容错
 
-# ---------------------- 全局配置：仅保留基础页面设置（移除CSS） ----------------------
+# ---------------------- 全局配置：仅保留基础页面设置 ----------------------
 st.set_page_config(
     page_title="学生成绩分析与预测系统",
     layout="wide",
@@ -25,13 +26,22 @@ COLUMNS = {
     "student_id": "学号"
 }
 
-# 🔥 修正：图片实际路径为 streamlit_env 下的 images 文件夹（对应截图位置）
+# 🔥 核心修改：匹配截图中的photo文件夹路径（本地+云端相对路径）
+# 要求：需将photo文件夹上传到GitHub仓库根目录
 LOCAL_IMAGES = {
-    "preview": r"D:/streamlit_env/images/功能预览图.png",
-    "excellent": r"D:/streamlit_env/images/很棒哦.jpg",
-    "good": r"D:/streamlit_env/images/继续努力.jpg",
-    "poor": r"D:/streamlit_env/images/要加强学习.jpg"
+    "preview": "photo/功能预览图.png",
+    "excellent": "photo/很棒哦.jpg",  # 截图中对应的文件名
+    "good": "photo/继续努力.jpg",
+    "poor": "photo/要加强学习.jpg"
 }
+
+# 侧边栏调试：检查云端photo文件夹是否存在
+st.sidebar.markdown("### 📝 路径调试（云端）")
+st.sidebar.write("仓库根目录内容：", os.listdir("."))
+if os.path.exists("photo"):
+    st.sidebar.write("photo文件夹内容：", os.listdir("photo"))
+else:
+    st.sidebar.warning("❌ 未找到photo文件夹！")
 
 # ---------------------- 1. 数据加载函数 ----------------------
 @st.cache_data
@@ -85,7 +95,12 @@ if page == "项目概述":
     
     with col_right:
         st.subheader("📸 功能预览")
-        st.image(LOCAL_IMAGES["preview"], use_container_width=True)
+        # 容错处理：图片不存在时显示提示
+        if os.path.exists(LOCAL_IMAGES["preview"]):
+            st.image(LOCAL_IMAGES["preview"], use_container_width=True)
+        else:
+            st.warning(f"⚠️ 功能预览图缺失：{LOCAL_IMAGES['preview']}")
+            st.info("请检查GitHub仓库的photo文件夹是否上传该图片")
 
     st.markdown("---")
 
@@ -298,7 +313,10 @@ else:
                 重点突破高阶知识点，进一步提升竞争力。
                 """)
                 st.markdown("#### 💖 专属鼓励")
-                st.image(LOCAL_IMAGES["excellent"], width=300)
+                if os.path.exists(LOCAL_IMAGES["excellent"]):
+                    st.image(LOCAL_IMAGES["excellent"], width=300)
+                else:
+                    st.warning(f"⚠️ 鼓励图片缺失：{LOCAL_IMAGES['excellent']}")
                 st.markdown("很棒哦！继续保持🌟")
                 
             elif predicted_final >= 70:
@@ -308,7 +326,10 @@ else:
                 每周可增加2-3小时学习时长，有望冲击优秀等级。
                 """)
                 st.markdown("#### 💪 专属鼓励")
-                st.image(LOCAL_IMAGES["good"], width=300)
+                if os.path.exists(LOCAL_IMAGES["good"]):
+                    st.image(LOCAL_IMAGES["good"], width=300)
+                else:
+                    st.warning(f"⚠️ 鼓励图片缺失：{LOCAL_IMAGES['good']}")
                 st.markdown("继续努力！优秀就在前方🚀")
                 
             else:
@@ -328,7 +349,10 @@ else:
                     4. 主动寻求老师一对一辅导。
                     """)
                 st.markdown("#### 📝 专属鼓励")
-                st.image(LOCAL_IMAGES["poor"], width=300)
+                if os.path.exists(LOCAL_IMAGES["poor"]):
+                    st.image(LOCAL_IMAGES["poor"], width=300)
+                else:
+                    st.warning(f"⚠️ 鼓励图片缺失：{LOCAL_IMAGES['poor']}")
                 st.markdown("要加强学习啦！现在努力还不晚💡")
             
             st.markdown("#### 📈 参考数据")
